@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import TitleText from './TitleText';
+import COLORS from '../values/colors';
 
 const Container = styled.div`
   position: absolute;
@@ -17,7 +20,7 @@ const Table = styled.table`
 
 const Th = styled.th`
   padding: 15px;
-  background-color: #55608f;
+  background-color: ${COLORS.light2};
   color: #fff;
   text-align: left;
 `;
@@ -48,9 +51,42 @@ const TbodyTr = styled.tr`
   }
 `;
 
-const Transactions = () => {
+const Transactions = async (props) => {
+  const { fetchAPI, walletId } = props
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [transactionList, setTransactionList] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await fetchAPI.getTransactions(walletId, 1, 1);
+        setTransactionList(result);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [fetchAPI]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  else {
+    <Container>
+      {JSON.stringify(transactionList)}
+    </Container>
+  }
   return (
     <Container>
+      <TitleText title="Transactions" />
       <Table>
         <thead>
           <tr>
@@ -102,5 +138,10 @@ const Transactions = () => {
     </Container>
   );
 }
+
+Transactions.propTypes = {
+ fetchAPI: PropTypes.object.isRequired,
+  walletId: PropTypes.string.isRequired
+};
 
 export default Transactions;

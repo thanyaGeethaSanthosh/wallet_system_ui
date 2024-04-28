@@ -1,14 +1,18 @@
-import './App.css';
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import WalletCreationForm from './components/WalletCreationForm';
 import Transactions from './components/Transactions';
+import FetchAPI from './handlers/FetchAPI';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      {/* <WalletCreationForm /> */}
-      <Transactions />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/transactions" element={<Transactions walletId={"661ec5e0b0317693c5e3f5cb"} fetchAPI={FetchAPI}/>} />
+        <Route path="/" element={<WalletCreationForm  fetchAPI={FetchAPI}/>} />
+      </Routes>
+    </BrowserRouter>
   );
-}
+};
 
 export default App;

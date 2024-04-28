@@ -1,6 +1,8 @@
 
-import { useState } from 'react';
+import React,{ useState } from 'react';
 import styled from 'styled-components';
+import COLORS from '../values/colors';
+import TitleText from './TitleText';
 
 const textBoxStyle = `
 &::-webkit-input-placeholder,
@@ -20,7 +22,7 @@ const textBoxStyle = `
 &:hover::-moz-placeholder,
 &:hover::placeholder,
 &:hover::-ms-input-placeholder {
-  color: #e2dedb;
+  color: ${COLORS.light1};
 }
 &:hover:focus::-webkit-input-placeholder,
 &:hover:focus::-moz-placeholder,
@@ -41,7 +43,7 @@ background: transparent;
 outline: none;
 color: #726659;
 
-border: solid 1px #b3aca7;
+border: solid 1px ${COLORS.light2};
 border-bottom: none;
 
 transition: all 0.3s ease-in-out;
@@ -49,8 +51,8 @@ transition: all 0.3s ease-in-out;
 -moz-transition: all 0.3s ease-in-out;
 -ms-transition: all 0.3s ease-in-out;
 &:hover {
-  background: #b3aca7;
-  color: #e2dedb;
+  background: ${COLORS.light2};
+  color: ${COLORS.light1};
 }
 `
 const StyledInput = styled.input`
@@ -66,12 +68,12 @@ padding: 0;
 margin: -5px 0px 0px 0px;
 font-family: 'Lato', sans-serif;
 font-size: 0.875em;
-color: #b3aca7;
+color: ${COLORS.light2};
 outline: none;
 cursor: pointer;
-border: solid 1px #b3aca7;
+border: solid 1px ${COLORS.light2};
 &:hover {
-  color: #e2dedb;
+  color: ${COLORS.light1};
 }
 `;
 
@@ -83,16 +85,8 @@ margin: 50px auto 100px auto;
 
 const StyledFormBody = styled.div`
 font-family: 'Lato', sans-serif;
-background: #e2dedb;
-color: #b3aca7;
-`
-
-const StyledHeader = styled.header`
-position: relative;
-margin: 100px 0 25px 0;
-font-size: 2.3em;
-text-align: center;
-letter-spacing: 7px;
+background: ${COLORS.light1};
+color: ${COLORS.light2};
 `
 
 function WalletCreationForm() {
@@ -114,7 +108,7 @@ function WalletCreationForm() {
 
   return (
     <StyledFormBody>
-      <StyledHeader>Wallet System</StyledHeader>
+      <TitleText title="Wallet System"/>
       <StyledForm>
         <StyledInput id="username" onChange={handleChange} type="text" placeholder="USERNAME" />
         <StyledInput id="walletname" onChange={handleChange} type="text" placeholder="WALLET NAME" />
